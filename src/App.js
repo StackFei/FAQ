@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+/**
+ * 原生JS使用redux
+ */
+import { createStore } from './redux'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const size = document.getElementById('number')
+const addBtn = document.getElementById('addBtn')
+const jiaBtn = document.getElementById('jiaBtn')
+const ADD = 'ADD'
+const MINUS = 'MINUS'
+function reducer(state = { number: 0 }, action) {
+    switch (action.type) {
+        case ADD:
+            return { number: state.number + 1 };
+        case MINUS:
+            return { number: state.number - 1 };
+        default:
+            return state;
+    }
 }
 
-export default App;
+const store = createStore(reducer);
+
+function render() {
+    size.innerHTML = store.getState().number
+}
+render()
+store.subscribe(render)
+addBtn.addEventListener('click', () => { store.dispatch({ type: ADD }) })
+jiaBtn.addEventListener('click', () => { store.dispatch({ type: MINUS }) })
