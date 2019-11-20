@@ -5,7 +5,7 @@ function bindActionCreator(actionCreator, dispatch) {
     }
 }
 export default function (actionCreators, dispatch) {
-    if (actionCreators instanceof 'function') {
+    if (typeof actionCreators === 'function') {
         return bindActionCreator(actionCreators, dispatch)
     }
     let args = [];
