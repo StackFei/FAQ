@@ -15,10 +15,10 @@ let actions = {
 // decerment = bindActionCreators(decerment,store.dispatch)
 actions = bindActionCreators(actions,store.dispatch)
 export default class Counter extends Component {
-    state = { number: store.getState().counter1.number }
+    state = { number: store.getState().number }
     componentDidMount() {
         this.unsubscribe = store.subscribe(() => {
-            this.setState({ number: store.getState().counter1.number })
+            this.setState({ number: store.getState().number })
         })
     }
     componentWillUnmount() {

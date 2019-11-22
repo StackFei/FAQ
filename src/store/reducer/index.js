@@ -1,9 +1,9 @@
-import couter1 from './couter1'
-import couter2 from './couter2'
-
 import { combineReducers } from 'redux';
+import counter1 from './counter1'
+import counter2 from './counter2'
 
-export default reducer = combineReducers({
-    couter1,
-    couter2
+let reducer = combineReducers({
+    counter1,
+    counter2
 })
+export default reducer;

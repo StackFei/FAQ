@@ -14,6 +14,6 @@ export default function createStore(reducer) {
             listeners = listeners.filter(item => item !== listen)
         }
     }
-    dispatch({ type: '@@react-redux-initial' })
+    dispatch({ type: '@@MY_REDUX_INIT' })
     return { dispatch, getState, subscribe }
 }

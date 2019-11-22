@@ -1,11 +1,11 @@
 import * as types from '../types'
 
-function ADD(payload) {
-    return { type: types.ADD1, payload }
+function increment(payload) {
+    return { type: types.INCREMENT1, payload }
 }
 
-function MINUS(payload) {
-    return { type: types.MINUS1, payload }
+function decrement(payload) {
+    return { type: types.DECREMENT1, payload }
 }
 
-export default { ADD, MINUS }
+export default { increment, decrement }
