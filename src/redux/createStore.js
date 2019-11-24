@@ -5,6 +5,10 @@ export default function createStore(reducer) {
         return state
     }
     function dispatch(action) {
+        // 纯对象
+        if (Object.getPrototypeOf(action) != Object.prototype) {
+            throw new Error("Actions must be a pure object")
+        }
         state = reducer(state, action)
         listeners.forEach(fn => fn())
     }

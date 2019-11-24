@@ -1,4 +1,4 @@
-import * as types from '../types'
+import * as types from '../action-types'
 
 function increment(payload) {
     return { type: types.INCREMENT2, payload }
