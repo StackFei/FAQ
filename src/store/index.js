@@ -4,10 +4,23 @@ import logger from '../redux-logger'
 import promise from '../redux-promise'
 import thunk from '../redux-thunk'
 import { createStore, compose, applyMiddleware } from '../redux'
+import { persistStore, persistReducer } from '../redux-persist'
+import storage from '../redux-persist/lib/storage'
 
-let store = applyMiddleware(promise, thunk, logger)(createStore)(reducer);
+const persistConfig = {
+    key: 'root',
+    storage
+}
+const persistedReducer = persistReducer(persistConfig, reducer)
 
-export default store;
+let store = applyMiddleware(promise, thunk, logger)(createStore)(persistedReducer);
+let persistor = persistStore(store)
+
+export {
+    store, persistor
+}
+
+
 // function applyMiddleware(...middlewares) {
 //     return function (createStore) {
 //         return function (reducer) {
