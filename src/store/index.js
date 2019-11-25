@@ -13,7 +13,9 @@ const persistConfig = {
 }
 const persistedReducer = persistReducer(persistConfig, reducer)
 
-let store = applyMiddleware(promise, thunk, logger)(createStore)(persistedReducer);
+//let store = applyMiddleware(promise, thunk, logger)(createStore)(persistedReducer);
+let store = createStore(reducer, applyMiddleware(promise, thunk, logger))
+
 let persistor = persistStore(store)
 
 export {

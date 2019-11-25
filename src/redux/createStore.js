@@ -1,4 +1,12 @@
-export default function createStore(reducer) {
+export default function createStore(reducer, preloadedState, enhancer) {
+    // preloadedState初始值<可有可无> 为函数兼容store中的第二种写法
+    if (preloadedState && typeof preloadedState === 'function') {
+        enhancer = preloadedState
+        preloadedState = undefined
+    }
+    if (enhancer) {
+        return enhancer(createStore)(reducer, preloadedState)
+    }
     let state;
     let listeners = [];
     function getState() {
