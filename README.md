@@ -1,3 +1,3 @@
 
 ## backup
-  - redux<实现>
+  - redux 入口文件 `redux.js` 
