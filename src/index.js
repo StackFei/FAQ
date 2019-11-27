@@ -1,5 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Index from './class/index';
+import Context  from './class';
 
-ReactDOM.render(<Index />, document.getElementById('root'))
+ReactDOM.render(<Context />, document.getElementById('root'))
