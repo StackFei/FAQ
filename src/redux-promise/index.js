@@ -3,7 +3,7 @@ export default function ({ getState, dispatch }) {
     return function (next) {
         return function (action) {
             if (action.then && typeof action.then === 'function') {
-                return action.then(dispatch)
+                return action.then(getState, dispatch)
             }
             //不执行函数直接向下一个中间件走
             next(action)
