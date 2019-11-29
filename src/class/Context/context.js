@@ -9,6 +9,10 @@ function createContext() {
             Provider.value = props.value
             // this.state = { value: props.value }
         }
+        static getDerivedStateFromProps(nextProps, prevState) {
+            Provider.value = nextProps.value
+            return {}
+        }
         render() {
             return this.props.children
         }
@@ -41,11 +45,10 @@ class Header extends React.Component {
     static contextType = ColorContext;
     render() {
         return (
-            null
-            // <div style={{ border: `3px solid ${this.context.color}` }}>
-            //     Header
-            // <HeaderChild />
-            // </div>
+            <div style={{ border: `3px solid ${Header.contextType.Provider.value.color}` }}>
+                Header
+            <HeaderChild />
+            </div>
         )
     }
 }
@@ -54,10 +57,9 @@ class HeaderChild extends React.Component {
     static contextType = ColorContext;
     render() {
         return (
-            null
-            // <div style={{ border: `3px solid ${this.context.color}` }}>
-            //     HeaderChild
-            // </div>
+            <div style={{ border: `3px solid ${HeaderChild.contextType.Provider.value.color}` }}>
+                HeaderChild
+            </div>
         )
     }
 }
