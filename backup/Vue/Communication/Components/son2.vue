@@ -25,6 +25,10 @@ export default {
       // parent 必须使用 :count.sync="count"
       this.$emit("update:count", 666);
     },
+    // 直接通过parent上的ref来获取
+    show(){
+      alert(3)
+    }
   }
 };
 </script>

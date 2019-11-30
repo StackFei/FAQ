@@ -9,6 +9,8 @@
     <Son2 v-model="count"></Son2>
     <!-- 将多个属性多个方法一次性传到孙组件 -->
     <Son2 :price="price" :count="count" @click="eat" @mouseup="eat"></Son2>
+    <!-- 直接通过真实dom元素获取 -->
+    <Son2 ref="son2"></Son2>
   </div>
 </template>
 
@@ -21,6 +23,13 @@ export default {
       price: 100,
       count: 200
     };
+  },
+  mounted(){
+      // 通过实例直接获取
+      this.$refs.son2.show()
+
+      // eventsBus
+      this.$bus.$on("bus",()=>{console.log('bus')})
   },
   components: {
     Son1,

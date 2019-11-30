@@ -25,6 +25,9 @@ Vue.prototype.$broadscat = function (eventName, value) {
     broad(children)
 }
 
+// 任意组件任意使用
+Vue.prototype.$bus = new Vue()
+
 new Vue({
     el: "#app",
     render: h => h(App)

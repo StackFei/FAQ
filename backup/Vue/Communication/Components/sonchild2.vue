@@ -7,6 +7,10 @@
 
 <script>
 export default {
-
+  mounted(){
+    this.$nextTick(()=>{
+      this.$bus.$emit('bus')
+    })
+  }
 };
 </script>
