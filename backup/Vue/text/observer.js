@@ -1,7 +1,7 @@
 let arrayProps = Array.prototype;
 let proto = Object.create(arrayProps);
 // 重写数组中的方法
-['push', 'shift', 'splice'].forEach(method => {
+['push', 'unshift', 'splice'].forEach(method => {
     proto[method] = function (...args) {
         // 判断数组中添加方法
         let inserted;
@@ -75,5 +75,6 @@ function Reactive(obj, key, value) {
 // 数组类型 
 let data = { a: [1, 2, 3, { name: "📒" }] }
 observer(data)
-data.a.push({ name: "守夜人" })
-data.a[4].name = "守夜人📒"
+// data.a = []
+// data.a.push({ name: "守夜人" })
+// data.a[4].name = "守夜人📒"
