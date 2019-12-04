@@ -1,0 +1,7 @@
+#root{background-color: red;}
+
+#logo {
+    width: 200px;
+    height: 200px;
+    background-image: url('./img/logo.png');
+}
