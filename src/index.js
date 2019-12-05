@@ -1,10 +1,15 @@
-import './index.css'
+import React from "react";
+import ReactDOM from 'react-dom'
 
-let img = require('./img/logo.png').default;
-console.log(img)
-let newImg  = new Image()
-newImg.src = img;
-document.body.appendChild(newImg)
+ReactDOM.render(<div>132435465</div>,document.getElementById('root'))
+
+// import './index.css'
+
+// let img = require('./img/logo.png').default;
+// console.log(img)
+// let newImg  = new Image()
+// newImg.src = img;
+// document.body.appendChild(newImg)
 
 
-document.write('666')
+// document.write('666')
