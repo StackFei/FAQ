@@ -56,6 +56,25 @@ class NativeUnit extends Unit {
         }
         return `${tagStart}>${tagCount}${tagEnd}`
     }
+    update(nextElement) {
+        let oldProps = this._currentElement.props;
+        let newProps = nextElement.props;
+        this.updateDOMProperties(oldProps, newProps)
+    }
+    updateDOMProperties(oldProps, newProps) {
+        let propName;
+        for (propName in oldProps) {
+            if (!newProps.hasOwnProperty(propName)) {
+                $(`[date-reactId="${this._reactId}"]`).removeAttr(propName)
+            }
+            if (/^on[A-Z]/.test(propName)) {
+                $(document).undelegate(`.${this._reactId}`)
+            }
+        }
+        for (propName in newProps) {
+            
+        }
+    }
 }
 
 class CompositeUnit extends Unit {
