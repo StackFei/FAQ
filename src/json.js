@@ -34,6 +34,7 @@ function tryModuleLoad(module) {
 Module._cache = {}
 function req(modulePath) {
     let absPathName = path.resolve(__dirname, modulePath);
+    /* ****************** 自动识别文件后缀  ******************/
     let extNames = Object.keys(Module._extenstions);
     let index = -1;
     let oldAbsPathName = absPathName
@@ -56,6 +57,7 @@ function req(modulePath) {
     } catch (e) {
         throw new Error('🚀')
     }
+    /* ************************************/
     if (Module._cache[absPathName]) {
         return Module._cache[absPathName].exports
     }
