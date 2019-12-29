@@ -134,7 +134,7 @@
 
 /******************************************************* */
 const PENDING = 'PENDING'
-const RESOLVED = 'RESOLVED'
+const FULFILLED = 'FULFILLED'
 const REJECTED = 'REJECTED'
 class Promise {
 	constructor(executor) {
@@ -144,9 +144,13 @@ class Promise {
 		this.onResolvedCallBacks = [];
 		this.onRejectedCallBacks = [];
 		const resolve = value => {
+			// 避免resolve(new Promise)
+			if (value instanceof Promise) {
+				return value.then(resolve, reject)
+			}
 			if (this.status = PENDING) {
 				this.value = value;
-				this.status = RESOLVED;
+				this.status = FULFILLED;
 				this.onResolvedCallBacks.forEach(fn => fn())
 			}
 		}
@@ -164,8 +168,10 @@ class Promise {
 		}
 	}
 	then(onFulfilled, onRejected) {
+		onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : value => value;
+		onRejected = typeof onRejected === 'function' ? onRejected : err => { throw err };
 		const promise = new Promise((resolve, reject) => {
-			if (this.status === RESOLVED) {
+			if (this.status === FULFILLED) {
 				setTimeout(() => {
 					try {
 						let x = onFulfilled(this.value)
@@ -211,6 +217,19 @@ class Promise {
 		})
 		return promise;
 	}
+	catch(onRejected) {
+		return this.then(null, onRejected)
+	}
+	static resolve(value) {
+		return new Promise((resolve, reject) => {
+			resolve(value)
+		})
+	}
+	static reject(reason) {
+		return new Promise((resolve, reject) => {
+			reject(reason)
+		})
+	}
 }
 
 const resolvePromise = (promise, x, resolve, reject) => {
@@ -218,18 +237,25 @@ const resolvePromise = (promise, x, resolve, reject) => {
 		return reject(new TypeError('循环引用'))
 	}
 	if ((typeof x === 'object' && x !== null) || typeof x == 'function') {
+		let called;
 		try {
 			let then = x.then;
 			if (typeof then === 'function') {
 				then.call(x, y => {
+					if (called) return;
+					called = true
 					resolvePromise(promise, y, resolve, reject)
 				}, r => {
+					if (called) return;
+					called = true
 					reject(r)
 				})
 			} else {
 				resolve(x)
 			}
 		} catch (e) {
+			if (called) return;
+			called = true
 			reject(e)
 		}
 	} else {
@@ -237,5 +263,42 @@ const resolvePromise = (promise, x, resolve, reject) => {
 	}
 }
 
+Promise.all = function (promises) {
+	return new Promise((resolve, reject) => {
+		let arr = [];
+		let index = 0;
+		let processData = (i, v) => {
+			arr[i] = data;
+			if (index++ === promises.length) {
+				resolve(arr);
+			}
+		}
+		for (let i = 0; i < promises.length; i++) {
+			let promise = promises[i];
+			if (isPromise(promise)) {
+				promise.then((data) => {
+					processData(i, data)
+				}, reject)
+			} else {
+				processData(i, promise)
+			}
+		}
+	})
+}
+const isPromise = value => {
+	if ((value !== null && typeof value === 'object') || typeof value === 'function') {
+		return typeof value.then === 'function'
+	}
+	return false
+}
+
+Promise.deferred = function () {
+	let dfd = {};
+	dfd.promise = new Promise((resolve, reject) => {
+		dfd.resolve = resolve;
+		dfd.reject = reject;
+	})
+	return dfd;
+}
 
 module.exports = Promise;
