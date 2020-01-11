@@ -50,7 +50,8 @@ import ReactDOM from 'react-dom';
 let firstWorkInProgressHook = { memorizedState: null, next: null };
 let workInProgressHook = firstWorkInProgressHook;
 function useState(initialState) {
-  let currentHook = workInProgressHook.next ? workInProgressHook.next :
+  let currentHook = workInProgressHook.next ?
+    workInProgressHook.next :
     { memorizedState: initialState, next: null };
   function steState(newState) {
     currentHook.memorizedState = newState;
@@ -66,17 +67,16 @@ function useState(initialState) {
 }
 
 function Counter() {
-  const [name, setName] = useState('计算器')
   const [number, setNumber] = useState(0)
   return (<div>
-    <p>{name}:{number}</p>
-    <button onClick={() => setName('计数器' + Date.now())}>+</button>
+    <p>{number}</p>
     <button onClick={() => setNumber(number + 1)}>+</button>
   </div>)
 }
 
 function render() {
-  workInProgressHook = firstWorkInProgressHook;
+  // index = 0; // 多个useState简答实现的坑
+  // workInProgressHook = firstWorkInProgressHook; //链表实现
   ReactDOM.render(<Counter />, document.getElementById('root'))
 }
 
